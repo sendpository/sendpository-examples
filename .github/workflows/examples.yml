@@ -1,0 +1,73 @@
+name: Examples
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1" # weekly: catch a dependency release that breaks an example
+  workflow_dispatch:
+
+env:
+  SENDPOSITORY_API_KEY: sp_test_key
+  SENDPOSITORY_FROM: "Acme <hello@verified.test>"
+  SENDPOSITORY_BASE_URL: http://localhost:4010/v1
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node .github/ci/mock-api.mjs & sleep 1
+      - working-directory: node
+        run: |
+          npm ci
+          touch .env
+          ../.github/ci/expect.sh npm run -s send --
+
+  nextjs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - working-directory: nextjs
+        run: |
+          npm ci
+          npm run build
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: node .github/ci/mock-api.mjs & sleep 1
+      - working-directory: python
+        run: ../.github/ci/expect.sh python send.py
+
+  php:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: "8.1", extensions: curl }
+      - run: node .github/ci/mock-api.mjs & sleep 1
+      - working-directory: php
+        run: |
+          php -l send.php
+          ../.github/ci/expect.sh php send.php
+
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.22" }
+      - run: node .github/ci/mock-api.mjs & sleep 1
+      - working-directory: go
+        run: |
+          go vet ./...
+          ../.github/ci/expect.sh go run .
