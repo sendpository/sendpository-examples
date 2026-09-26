@@ -2,11 +2,13 @@
   "name": "sendpository-node-example",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=20.6" },
+  "engines": {
+    "node": ">=20.6"
+  },
   "scripts": {
     "send": "node --env-file=.env send.js"
   },
   "dependencies": {
-    "sendpository": "^0.3.2"
+    "sendpository": "^0.5.0"
   }
 }
