@@ -31,6 +31,23 @@ Each folder is a complete, runnable example: clone, add your API key, send.
 | [php](./php) | PHP 8.1+ with ext-curl | `php send.php you@example.com` |
 | [go](./go) | Go 1.22+, standard library only | `go run . you@example.com` |
 
+## Using an AI coding agent?
+
+This repo already has the Sendpository skill installed
+(`.claude/skills/sendpository/` and `AGENTS.md`), so Claude Code, Codex,
+Cursor and Copilot know how to work with it. Open any example with your agent
+and ask it to extend it - "add a password reset email", "handle bounces".
+
+In your own project, one command does the same:
+
+```bash
+npx sendpository@latest agents
+```
+
+Moving from Resend, SendGrid, Postmark, Mailgun or SES? Ask your agent to
+"switch this project's email to Sendpository" after running it. See
+[sendpository.com/agents](https://sendpository.com/agents).
+
 ## Before your first send
 
 1. Create an account at [sendpository.com](https://sendpository.com).
