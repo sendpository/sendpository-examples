@@ -37,8 +37,17 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000, enter your address and press **Send**. You should see
+Set `DEMO_RECIPIENT` to your own mailbox and `DEMO_ACCESS_TOKEN` to a private,
+random token of at least 32 characters (distinct from your Sendpository API key).
+Open http://localhost:3000, enter that demo token and your configured address,
+then press **Send**. You should see
 `Sent. Message id: …`, and the email arrives within seconds.
+
+The server action refuses unauthenticated sends and other recipients. Its five
+sends/minute limit is per process, suitable for a local demonstration only.
+Before adapting this for a public product, replace the shared demo token with
+your application's session authorization and use a distributed rate limiter.
+Do not remove authorization just because the action is called by a form.
 
 ## What's where
 

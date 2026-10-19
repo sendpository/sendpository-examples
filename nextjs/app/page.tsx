@@ -9,14 +9,17 @@ export default function Home() {
   return (
     <main style={{ maxWidth: 480, margin: "80px auto", fontFamily: "system-ui, sans-serif" }}>
       <h1>Send a test email</h1>
-      <form action={action} style={{ display: "flex", gap: 8 }}>
-        <input name="to" type="email" required placeholder="you@example.com" style={{ flex: 1, padding: 8 }} />
+      <form action={action} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <label htmlFor="demo-token">Demo access token (not your API key)</label>
+        <input id="demo-token" name="accessToken" type="password" required autoComplete="off" style={{ minWidth: 0, padding: 8 }} />
+        <label htmlFor="demo-recipient">Configured test recipient</label>
+        <input id="demo-recipient" name="to" type="email" required placeholder="you@example.com" style={{ minWidth: 0, padding: 8 }} />
         <button type="submit" disabled={pending} style={{ padding: "8px 16px" }}>
           {pending ? "Sending…" : "Send"}
         </button>
       </form>
-      {state.id ? <p>Sent. Message id: <code>{state.id}</code></p> : null}
-      {state.error ? <p style={{ color: "crimson" }}>{state.error}</p> : null}
+      {state.id ? <p role="status">Sent. Message id: <code>{state.id}</code></p> : null}
+      {state.error ? <p role="alert" style={{ color: "crimson" }}>{state.error}</p> : null}
     </main>
   );
 }
