@@ -9,6 +9,6 @@
     "send": "node --env-file=.env send.js"
   },
   "dependencies": {
-    "sendpository": "^0.5.0"
+    "sendpository": "^0.6.0"
   }
 }
